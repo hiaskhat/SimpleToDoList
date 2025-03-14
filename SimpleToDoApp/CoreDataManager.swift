@@ -13,7 +13,7 @@ final class CoreDataManager {
     let persistentContainer: NSPersistentContainer
 
     private init() {
-        persistentContainer = NSPersistentContainer(name: "SimpleToDoApp") // Название должно совпадать с Core Data Model
+        persistentContainer = NSPersistentContainer(name: "SimpleToDoApp") 
         persistentContainer.loadPersistentStores { storeDescription, error in
             if let error = error {
                 fatalError("Ошибка загрузки Core Data: \(error)")
@@ -36,6 +36,19 @@ final class CoreDataManager {
             }
         }
     }
+    
+    func deleteAllTasks() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Task.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print("Ошибка при удалении всех задач: \(error)")
+        }
+    }
+
     
     // MARK: - CRUD Методы
 

@@ -10,11 +10,15 @@
 		62BFBAB72D801FC900608F74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBAB62D801FC900608F74 /* AppDelegate.swift */; };
 		62BFBAB92D801FC900608F74 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBAB82D801FC900608F74 /* SceneDelegate.swift */; };
 		62BFBABB2D801FC900608F74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBABA2D801FC900608F74 /* ViewController.swift */; };
-		62BFBABE2D801FC900608F74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62BFBABC2D801FC900608F74 /* Main.storyboard */; };
 		62BFBAC12D801FC900608F74 /* SimpleToDoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBABF2D801FC900608F74 /* SimpleToDoApp.xcdatamodeld */; };
 		62BFBAC32D801FD600608F74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62BFBAC22D801FD600608F74 /* Assets.xcassets */; };
 		62BFBAC62D801FD600608F74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62BFBAC42D801FD600608F74 /* LaunchScreen.storyboard */; };
 		62BFBACE2D8022B900608F74 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBACD2D8022B900608F74 /* CoreDataManager.swift */; };
+		62BFBAD02D82FF8100608F74 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBACF2D82FF8100608F74 /* TaskService.swift */; };
+		62BFBAD22D8302D800608F74 /* TodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBAD12D8302D800608F74 /* TodoViewController.swift */; };
+		62BFBAD42D83033200608F74 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBAD32D83033200608F74 /* TaskCell.swift */; };
+		62BFBAD62D8303AC00608F74 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBAD52D8303AC00608F74 /* TaskDetailViewController.swift */; };
+		62BFBAD82D8304EB00608F74 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BFBAD72D8304EB00608F74 /* AddTaskViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,12 +26,16 @@
 		62BFBAB62D801FC900608F74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62BFBAB82D801FC900608F74 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		62BFBABA2D801FC900608F74 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		62BFBABD2D801FC900608F74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		62BFBAC02D801FC900608F74 /* SimpleToDoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleToDoApp.xcdatamodel; sourceTree = "<group>"; };
 		62BFBAC22D801FD600608F74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62BFBAC52D801FD600608F74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		62BFBAC72D801FD600608F74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		62BFBACD2D8022B900608F74 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		62BFBACF2D82FF8100608F74 /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
+		62BFBAD12D8302D800608F74 /* TodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewController.swift; sourceTree = "<group>"; };
+		62BFBAD32D83033200608F74 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		62BFBAD52D8303AC00608F74 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		62BFBAD72D8304EB00608F74 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,12 +71,16 @@
 				62BFBAB62D801FC900608F74 /* AppDelegate.swift */,
 				62BFBAB82D801FC900608F74 /* SceneDelegate.swift */,
 				62BFBABA2D801FC900608F74 /* ViewController.swift */,
-				62BFBABC2D801FC900608F74 /* Main.storyboard */,
 				62BFBAC22D801FD600608F74 /* Assets.xcassets */,
 				62BFBAC42D801FD600608F74 /* LaunchScreen.storyboard */,
 				62BFBAC72D801FD600608F74 /* Info.plist */,
 				62BFBABF2D801FC900608F74 /* SimpleToDoApp.xcdatamodeld */,
 				62BFBACD2D8022B900608F74 /* CoreDataManager.swift */,
+				62BFBACF2D82FF8100608F74 /* TaskService.swift */,
+				62BFBAD12D8302D800608F74 /* TodoViewController.swift */,
+				62BFBAD32D83033200608F74 /* TaskCell.swift */,
+				62BFBAD52D8303AC00608F74 /* TaskDetailViewController.swift */,
+				62BFBAD72D8304EB00608F74 /* AddTaskViewController.swift */,
 			);
 			path = SimpleToDoApp;
 			sourceTree = "<group>";
@@ -133,7 +145,6 @@
 			files = (
 				62BFBAC62D801FD600608F74 /* LaunchScreen.storyboard in Resources */,
 				62BFBAC32D801FD600608F74 /* Assets.xcassets in Resources */,
-				62BFBABE2D801FC900608F74 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,25 +155,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62BFBAD62D8303AC00608F74 /* TaskDetailViewController.swift in Sources */,
 				62BFBABB2D801FC900608F74 /* ViewController.swift in Sources */,
 				62BFBAB72D801FC900608F74 /* AppDelegate.swift in Sources */,
+				62BFBAD22D8302D800608F74 /* TodoViewController.swift in Sources */,
+				62BFBAD02D82FF8100608F74 /* TaskService.swift in Sources */,
+				62BFBAD42D83033200608F74 /* TaskCell.swift in Sources */,
 				62BFBAB92D801FC900608F74 /* SceneDelegate.swift in Sources */,
 				62BFBACE2D8022B900608F74 /* CoreDataManager.swift in Sources */,
 				62BFBAC12D801FC900608F74 /* SimpleToDoApp.xcdatamodeld in Sources */,
+				62BFBAD82D8304EB00608F74 /* AddTaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		62BFBABC2D801FC900608F74 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				62BFBABD2D801FC900608F74 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		62BFBAC42D801FD600608F74 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -305,7 +313,6 @@
 				INFOPLIST_FILE = SimpleToDoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -333,7 +340,6 @@
 				INFOPLIST_FILE = SimpleToDoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

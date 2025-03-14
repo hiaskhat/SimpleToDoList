@@ -11,10 +11,28 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // Создаем окно
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let navController = UINavigationController(rootViewController: TodoViewController())
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
+        
+       
+
+        //UserDefaults.standard.setValue(false, forKey: "isDataLoaded")
+
+        // Загружаем данные из API, если это первый запуск
+        if TaskService.shared.shouldLoadData() {
+            //CoreDataManager.shared.deleteAllTasks() // Очистка базы данных
+            TaskService.shared.fetchTodosFromAPI {
+                print("Задачи загружены и сохранены в Core Data")
+            }
+        }
+        
         return true
     }
 
