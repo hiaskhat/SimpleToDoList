@@ -14,7 +14,7 @@ final class TaskCell: UITableViewCell {
     private let descriptionLabel = UILabel()
     private let dateLabel = UILabel()
 
-    var toggleCompletion: (() -> Void)? // Колбэк для обработки нажатия
+    var toggleCompletion: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,19 +77,56 @@ final class TaskCell: UITableViewCell {
     }
 
     @objc private func checkmarkTapped() {
-        toggleCompletion?() // Вызываем колбэк при нажатии
+        toggleCompletion?()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        titleLabel.text = nil
+        descriptionLabel.text = nil
+        titleLabel.textColor = .black
+        descriptionLabel.textColor = .black
+
+        checkmarkButton.setImage(UIImage(systemName: "circle")?.withTintColor(.yellow, renderingMode: .alwaysOriginal), for: .normal)
+    }
+
+
+
 
     func configure(with task: Task) {
-        titleLabel.text = task.title
-        descriptionLabel.text = task.taskDescription?.isEmpty == false ? task.taskDescription : "Нет описания"
+      
+        backgroundColor = .systemBackground
+        titleLabel.textColor = .label
+        descriptionLabel.textColor = .secondaryLabel
+        dateLabel.textColor = .tertiaryLabel
+        
+        // устанавливаем обычный текст
+        titleLabel.text = task.title ?? "Без названия"
+        descriptionLabel.text = task.taskDescription?.isEmpty == false ? task.taskDescription : ""
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .short
-        dateLabel.text = "Создано: \(dateFormatter.string(from: task.createdAt ?? Date()))"
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        dateLabel.text = "\(dateFormatter.string(from: task.createdAt ?? Date()))"
 
-        // Обновляем чекбокс
-        checkmarkButton.backgroundColor = task.isCompleted ? .yellow : .clear
+        if task.isCompleted {
+            let image = UIImage(systemName: "checkmark")?.withTintColor(.yellow, renderingMode: .alwaysOriginal)
+            checkmarkButton.setImage(image, for: .normal)
+            
+//            titleLabel.textColor = UIColor.black.withAlphaComponent(0.5)
+//            descriptionLabel.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+            titleLabel.alpha = 0.5
+            descriptionLabel.alpha = 0.5
+        } else {
+            //let image = UIImage(systemName: "circle")?.withTintColor(.yellow, renderingMode: .alwaysOriginal)
+            checkmarkButton.setImage(nil, for: .normal)
+            
+//            titleLabel.textColor = .black
+//            descriptionLabel.textColor = .darkGray
+            titleLabel.alpha = 1.0
+            descriptionLabel.alpha = 1.0
+        }
     }
+
 }

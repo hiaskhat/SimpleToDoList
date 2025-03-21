@@ -26,29 +26,41 @@ final class TaskService {
 
     // Проверяем, загружались ли данные раньше
     func shouldLoadData() -> Bool {
-        return !UserDefaults.standard.bool(forKey: userDefaultsKey)
+        let isDataLoaded = !UserDefaults.standard.bool(forKey: userDefaultsKey)
+        return isDataLoaded
     }
 
     // Загружаем задачи из API
     func fetchTodosFromAPI(completion: @escaping () -> Void) {
         guard let url = URL(string: apiURL) else { return }
 
+        if UserDefaults.standard.bool(forKey: userDefaultsKey) {
+            return
+        }
+
+        //ставим тру и теперь больше с апи не загружаем
+        UserDefaults.standard.setValue(true, forKey: userDefaultsKey)
+
+
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
-                print("Ошибка загрузки: \(error?.localizedDescription)" )
                 return
             }
 
             do {
-//                let decodedData = try JSONDecoder().decode([String: [TodoItem]].self, from: data)
-//                let todos = decodedData["todos"] ?? []
                 let decodedResponse = try JSONDecoder().decode(TodoResponse.self, from: data)
-                    let todos = decodedResponse.todos
+                let todos = decodedResponse.todos
 
                 DispatchQueue.main.async {
+                    
+                    // удаляем старые задачи перед загрузкой новых
+                    CoreDataManager.shared.deleteAllTasks()
+
                     self.saveTodosToCoreData(todos: todos)
-                    UserDefaults.standard.setValue(true, forKey: self.userDefaultsKey) // Помечаем, что данные загружены
                     completion()
+
+                    // обновляем таблицу
+                    NotificationCenter.default.post(name: NSNotification.Name("reloadData"), object: nil)
                 }
             } catch {
                 print("Ошибка декодирования JSON: \(error)")
@@ -56,10 +68,19 @@ final class TaskService {
         }.resume()
     }
 
-    // Сохранение задач в Core Data
+
     private func saveTodosToCoreData(todos: [TodoItem]) {
+        //сохраняем по каждой задаче
         for todo in todos {
-            CoreDataManager.shared.createTask(title: todo.todo, description: "")
+            let newTask = Task(context: CoreDataManager.shared.context)
+            newTask.id = UUID()
+            newTask.title = todo.todo
+            newTask.taskDescription = ""
+            newTask.createdAt = Date()
+            newTask.isCompleted = todo.completed
         }
+        CoreDataManager.shared.saveContext()
     }
+
+
 }

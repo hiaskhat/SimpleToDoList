@@ -19,9 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-               window.rootViewController = UINavigationController(rootViewController: TodoViewController()) // Указываем стартовый экран
-               self.window = window
-               window.makeKeyAndVisible()
+        let todoVC = TodoViewController()
+        let navigationController = UINavigationController(rootViewController: todoVC)
+        
+        window.rootViewController = navigationController
+        self.window = window
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

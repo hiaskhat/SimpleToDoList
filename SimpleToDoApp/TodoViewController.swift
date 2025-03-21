@@ -23,11 +23,18 @@ final class TodoViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         loadTasks()
-        print("TodoViewController загружен!") 
+        setupNavigationBar()
+        
+        // чтобы обновить таблицу после загрузки API
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableView), name: NSNotification.Name("reloadData"), object: nil)
+
     }
     
+
+    
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+        tableView.backgroundColor = .systemBackground
         title = "Задачи"
         
         // Настройка SearchBar
@@ -42,18 +49,37 @@ final class TodoViewController: UIViewController {
         view.addSubview(tableView)
         
         // Настройка Footer
-        footerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        footerView.backgroundColor = .secondarySystemBackground
         view.addSubview(footerView)
         
-        taskCountLabel.textAlignment = .left
+        taskCountLabel.textColor = .label
+        taskCountLabel.textAlignment = .center
         footerView.addSubview(taskCountLabel)
         
-        addTaskButton.setTitle("Добавить задачу", for: .normal)
+        addTaskButton.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
+        addTaskButton.tintColor = .systemYellow
         addTaskButton.addTarget(self, action: #selector(addTaskTapped), for: .touchUpInside)
         footerView.addSubview(addTaskButton)
         
         setupConstraints()
     }
+    
+    private func setupNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        
+        appearance.backgroundColor = UIColor.systemBackground
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.label]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.label]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Задачи"
+    }
+
     
     private func setupConstraints() {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -64,8 +90,8 @@ final class TodoViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -77,11 +103,13 @@ final class TodoViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             footerView.heightAnchor.constraint(equalToConstant: 60),
             
-            taskCountLabel.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 16),
+            taskCountLabel.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
             taskCountLabel.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
             
             addTaskButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -16),
-            addTaskButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor)
+            addTaskButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
+            addTaskButton.widthAnchor.constraint(equalToConstant: 30),
+            addTaskButton.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -92,12 +120,12 @@ final class TodoViewController: UIViewController {
     }
     
     private func updateFooter() {
-        taskCountLabel.text = "Задач: \(tasks.count)"
+        taskCountLabel.text = "\(tasks.count) Задач"
     }
     
     @objc private func addTaskTapped() {
         let addTaskVC = AddTaskViewController()
-        addTaskVC.delegate = self // Устанавливаем делегата
+        addTaskVC.delegate = self
         navigationController?.pushViewController(addTaskVC, animated: true)
     }
     
@@ -127,11 +155,21 @@ final class TodoViewController: UIViewController {
     }
 
     private func shareTask(_ task: Task) {
-        let taskText = "Задача: \(task.title)\nОписание: \(task.taskDescription ?? "Нет описания")"
+        let taskText = "Задача: \(task.title)\n Описание: \(task.taskDescription ?? "Нет описания")"
         let activityVC = UIActivityViewController(activityItems: [taskText], applicationActivities: nil)
         present(activityVC, animated: true)
     }
 
+    private func toggleTaskCompletion(_ task: Task) {
+        CoreDataManager.shared.toggleTaskCompletion(task: task)
+        tableView.reloadData()
+    }
+
+    // Метод для обновления таблицы
+    @objc private func reloadTableView() {
+        loadTasks()
+        tableView.reloadData()
+    }
 }
 
 extension TodoViewController: UITableViewDelegate, UITableViewDataSource {
@@ -142,7 +180,13 @@ extension TodoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskCell
         let task = tasks[indexPath.row]
+
         cell.configure(with: task)
+        
+        // обрабатываем нажатие на кружочек
+        cell.toggleCompletion = { [weak self] in
+            self?.toggleTaskCompletion(task)
+        }
         return cell
     }
     
@@ -200,7 +244,7 @@ extension TodoViewController: UISearchBarDelegate {
 
 extension TodoViewController: AddTaskDelegate {
     func didAddTask() {
-        loadTasks() // Перезагружаем список задач
+        loadTasks() 
     }
 }
 

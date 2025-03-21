@@ -32,7 +32,7 @@ final class TaskDetailViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Детали задачи"
         
         // Настройка titleLabel
@@ -81,8 +81,8 @@ final class TaskDetailViewController: UIViewController {
         descriptionLabel.text = task.taskDescription?.isEmpty == false ? task.taskDescription : "Нет описания"
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .short
-        dateLabel.text = "Создано: \(dateFormatter.string(from: task.createdAt ?? Date()))"
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        dateLabel.text = "\(dateFormatter.string(from: task.createdAt ?? Date()))"
     }
 }

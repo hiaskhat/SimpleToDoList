@@ -22,12 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
        
-
+        //чтобы как будто в первые запускаем
         //UserDefaults.standard.setValue(false, forKey: "isDataLoaded")
 
         // Загружаем данные из API, если это первый запуск
         if TaskService.shared.shouldLoadData() {
-            //CoreDataManager.shared.deleteAllTasks() // Очистка базы данных
+            //удалить все задачи если запускаем впервые
+           //CoreDataManager.shared.deleteAllTasks() // Очистка базы данных
             TaskService.shared.fetchTodosFromAPI {
                 print("Задачи загружены и сохранены в Core Data")
             }

@@ -25,7 +25,7 @@ final class AddTaskViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Новая задача"
         
         // Настройка titleTextField
@@ -73,7 +73,7 @@ final class AddTaskViewController: UIViewController {
         
         CoreDataManager.shared.createTask(title: title, description: description)
         
-        delegate?.didAddTask() // Уведомляем TodoViewController об обновлении
+        delegate?.didAddTask() 
         navigationController?.popViewController(animated: true)
     }
 }

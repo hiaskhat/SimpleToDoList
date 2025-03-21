@@ -16,7 +16,7 @@ final class CoreDataManager {
         persistentContainer = NSPersistentContainer(name: "SimpleToDoApp") 
         persistentContainer.loadPersistentStores { storeDescription, error in
             if let error = error {
-                fatalError("Ошибка загрузки Core Data: \(error)")
+                fatalError("Ошибка загрузки кор дата: \(error)")
             }
         }
     }
@@ -32,7 +32,7 @@ final class CoreDataManager {
             do {
                 try context.save()
             } catch {
-                fatalError("Ошибка сохранения Core Data: \(error)")
+                fatalError("Ошибка сохранения кордата: \(error)")
             }
         }
     }
@@ -48,6 +48,8 @@ final class CoreDataManager {
             print("Ошибка при удалении всех задач: \(error)")
         }
     }
+    
+    
 
     
     // MARK: - CRUD Методы
@@ -65,22 +67,28 @@ final class CoreDataManager {
       }
 
       // 2. Получение всех задач
-      func fetchTasks() -> [Task] {
-          let request: NSFetchRequest<Task> = Task.fetchRequest()
-          request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+    func fetchTasks() -> [Task] {
+        let request: NSFetchRequest<Task> = Task.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
 
-          do {
-              return try context.fetch(request)
-          } catch {
-              print("Ошибка загрузки задач: \(error)")
-              return []
-          }
-      }
+        do {
+            let tasks = try context.fetch(request)
+            //print("кордата загружено задач: \(tasks.count)")
+            return tasks
+        } catch {
+            return []
+        }
+    }
+
 
       // 3. Обновление статуса задачи (выполнена/не выполнена)
       func toggleTaskCompletion(task: Task) {
           task.isCompleted.toggle()
           saveContext()
+          
+          // После изменения статуса, отправляем обновление таблицы
+        NotificationCenter.default.post(name: NSNotification.Name("reloadData"), object: nil)
+
       }
 
       // 4. Удаление задачи
